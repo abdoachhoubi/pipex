@@ -28,7 +28,7 @@ NAME = pipex
 all: ${NAME}
 
 ${NAME}: lib ${PLIB}
-	${CC} ${CFLAGS} pipex.c ${SRC} -o ${NAME}
+	@${CC} ${CFLAGS} pipex.c ${SRC} -o ${NAME}
 	@echo "\033[1;33mpipex: pipex program compiled successfully!\033[0m"
 
 ${PLIB}: ${POBJ}
@@ -39,6 +39,7 @@ lib:
 	@${MAKE} -C ft_printf; ${MAKE} clean -C ft_printf
 
 clean:
+	@${RM} */*.o
 	@${RM} *.o
 
 fclean: clean

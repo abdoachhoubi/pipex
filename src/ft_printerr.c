@@ -18,8 +18,9 @@ int	print_error(char *message)
 	return (1);
 }
 
-int	exit_with_error(char *message)
+int	exit_with_error(int nb)
 {
-	perror(message);
-	exit(1);
+	ft_printf("Error found in: %d\n", nb);
+	perror("\033[31mError");
+	exit(EXIT_FAILURE);
 }

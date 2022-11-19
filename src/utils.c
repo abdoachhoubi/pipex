@@ -30,16 +30,51 @@ static int	ft_contains(char *s, char *sub)
 	return (0);
 }
 
-char	*find_path(char **env)
+char	*find_path(char *cmd, char **envp)
 {
-	int	i;
+	char	**paths;
+	char	*path;
+	int		i;
+	char	*part_path;
 
 	i = 0;
-	while (env[i])
+	while (ft_contains(envp[i], "PATH") == 0)
+		i++;
+	paths = ft_split(envp[i] + 5, ':');
+	i = 0;
+	while (paths[i])
 	{
-		if (ft_contains(env[i], "PATH"))
-			return (env[i]);
+		part_path = ft_strjoin(paths[i], "/");
+		path = ft_strjoin(part_path, cmd);
+		free(part_path);
+		if (access(path, F_OK) == 0)
+			return (path);
+		free(path);
 		i++;
 	}
-	return (NULL);
+	i = -1;
+	while (paths[++i])
+		free(paths[i]);
+	free(paths);
+	return (0);
+}
+
+void	execute(char *av, char **env, char **cmd)
+{
+	int 	i;
+	char	*path;
+	
+	i = -1;
+	cmd = ft_split(av, ' ');
+	ft_printf("cmd: %s\n", cmd[0]);
+	path = find_path(cmd[0], env);
+	if (!path)	
+	{
+		while (cmd[++i])
+			free(cmd[i]);
+		free(cmd);
+		exit_with_error(3);
+	}
+	if (execve(path, cmd, env) == -1)
+		exit_with_error(4);
 }

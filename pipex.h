@@ -24,17 +24,19 @@
 # include "./ft_printf/ft_printf.h"
 
 int		print_error(char *message);
-int		exit_with_error(char *message);
-char	*find_path(char **env);
+int		exit_with_error(int nb);
+char	*find_path(char *cmd, char **env);
+void	child_process(char **av, char **env, int *fd, char **cmd);
+void	parent_process(char **argv, char **envp, int *fd);
+void	execute(char *av, char **env, char **cmd);
 
 typedef struct s_var {
 	int		infile;
 	int		outfile;
-	int		pid1;
-	int		pid2;
+	pid_t	pid1;
+	pid_t	pid2;
 	int		fd[2];
-	char	*paths;
-	char	**cmd_paths;
+	char	**cmd;
 } t_var;
 
 #endif
