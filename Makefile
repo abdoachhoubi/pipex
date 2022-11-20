@@ -41,11 +41,12 @@ lib:
 clean:
 	@${RM} */*.o
 	@${RM} *.o
+	@echo "\033[1;31mpipex: deleted all object files!\033[0m"
 
 fclean: clean
 	@${RM} ${NAME}
 	@${RM} ${PLIB}
-	@echo "\033[1;31mpipex: Deleted pipex program successfully!\033[0m"
+	@echo "\033[1;31mpipex: Deleted pipex program!\033[0m"
 
 re: fclean all
 	@echo "\033[1;32mpipex: Re-creating pipex program!\033[0m"

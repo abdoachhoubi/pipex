@@ -66,7 +66,6 @@ void	execute(char *av, char **env, char **cmd)
 	
 	i = -1;
 	cmd = ft_split(av, ' ');
-	ft_printf("cmd: %s\n", cmd[0]);
 	path = find_path(cmd[0], env);
 	if (!path)	
 	{
