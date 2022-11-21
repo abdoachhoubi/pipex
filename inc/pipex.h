@@ -20,12 +20,12 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <errno.h>
-# include "./libft/libft.h"
-# include "./ft_printf/ft_printf.h"
+# include "../libft/libft.h"
 
+int		exit_with_error(void);
 int		print_error(char *message);
-int		exit_with_error(int nb);
 char	*find_path(char *cmd, char **env);
+int		ft_contains(char *s, char *sub);
 void	child_process(char **av, char **env, int *fd, char **cmd);
 void	parent_process(char **av, char **env, int *fd, char **cmd);
 void	execute(char *av, char **env, char **cmd);
@@ -36,6 +36,6 @@ typedef struct s_var {
 	pid_t	pid;
 	int		fd[2];
 	char	**cmd;
-} t_var;
+}	t_var;
 
 #endif

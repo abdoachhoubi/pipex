@@ -47,11 +47,11 @@ bonus: $(NAME) $(BOBJ)
 
 clean:
 	@$(RM) $(OBJ) $(BOBJ)
-	@echo "\033[1;34mlibft: Removed all .o files\033[0m"
+	@echo "\033[1;31mlibft: Removed all .o files\033[0m"
 
 fclean: clean
 	@$(RM) $(NAME)
-	@echo "\033[1;34mlibft: Removed libft.a\033[0m"
+	@echo "\033[1;31mlibft: Removed libft.a\033[0m"
 
 re: fclean all
 	@echo "\033[1;32mlibft: Re-creating libft.a\033[0m"

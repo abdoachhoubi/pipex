@@ -10,43 +10,33 @@
 #                                                                              #
 # **************************************************************************** #
 
-MAKE = make
-SRC = ./pipex.a ./libft/libft.a ./ft_printf/libftprintf.a
-PSRC = $(addprefix src/, ft_printerr utils)
-POBJ = ${PSRC:=.o}
-PLIB = pipex.a
-CD = cd
-CC = cc
-RM = rm -rf
-AR = ar -rc
-CFLAGS = -Wall -Wextra -Werror
+SRC = $(addprefix src/, pipex.c utils.c)
+LIBFT = ./libft/libft.a
 NAME = pipex
-
-%.o:%.c
-	@$(CC) ${CFLAGS} -c $< -o $@
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
+RM = rm -rf
+MAKE = make
 
 all: ${NAME}
 
-${NAME}: lib ${PLIB}
-	@${CC} ${CFLAGS} pipex.c ${SRC} -o ${NAME}
+${NAME}: ${LIBFT}
+	@${CC} ${CFLAGS} ${SRC} ${LIBFT} -o ${NAME}
 	@echo "\033[1;33mpipex: pipex program compiled successfully!\033[0m"
 
-${PLIB}: ${POBJ}
-	@${AR} ${PLIB} ${POBJ}
-
-lib:
-	@${MAKE} -C libft; ${MAKE} clean -C libft
-	@${MAKE} -C ft_printf; ${MAKE} clean -C ft_printf
+${LIBFT}:
+	@${MAKE} -C ./libft; ${MAKE} clean -C ./libft
 
 clean:
 	@${RM} */*.o
 	@${RM} *.o
-	@echo "\033[1;31mpipex: deleted all object files!\033[0m"
+	@${MAKE} clean -C libft
+	@echo "\033[1;31mpipex: Removed all .o files!\033[0m"
 
 fclean: clean
 	@${RM} ${NAME}
-	@${RM} ${PLIB}
-	@echo "\033[1;31mpipex: Deleted pipex program!\033[0m"
+	@${MAKE} fclean -C libft 
+	@echo "\033[1;31mpipex: Removed pipex program!\033[0m"
 
 re: fclean all
 	@echo "\033[1;32mpipex: Re-creating pipex program!\033[0m"

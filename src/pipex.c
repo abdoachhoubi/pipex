@@ -10,16 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../inc/pipex.h"
 
 void	child_process(char **av, char **env, int *fd, char **cmd)
 {
 	int	filein;
-	(void)fd;
 
 	filein = open(av[1], O_RDONLY);
 	if (filein == -1)
-		exit_with_error(2);
+		exit_with_error();
 	dup2(fd[1], STDOUT_FILENO);
 	dup2(filein, STDIN_FILENO);
 	close(fd[0]);
@@ -32,7 +31,7 @@ void	parent_process(char **av, char **env, int *fd, char **cmd)
 
 	fileout = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (fileout == -1)
-		exit_with_error(5);
+		exit_with_error();
 	dup2(fd[0], STDIN_FILENO);
 	dup2(fileout, STDOUT_FILENO);
 	close(fd[1]);
@@ -48,15 +47,14 @@ int	main(int ac, char **av, char **env)
 	else
 	{
 		if (pipe(var.fd) == -1)
-			exit_with_error(0);
-		var.pid1 = fork();
+			exit_with_error();
+		var.pid = fork();
 		if (var.pid == -1)
-			exit_with_error(1);
+			exit_with_error();
 		if (var.pid == 0)
 			child_process(av, env, var.fd, var.cmd);
-		else 
+		else
 			parent_process(av, env, var.fd, var.cmd);
-
 	}
 	sleep(100);
 }

@@ -10,9 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex.h"
+#include "../inc/pipex.h"
 
-static int	ft_contains(char *s, char *sub)
+int	exit_with_error(void)
+{
+	perror("\033[31mError");
+	exit(EXIT_FAILURE);
+}
+
+int	print_error(char *message)
+{
+	ft_putendl_fd(message, 2);
+	exit(EXIT_FAILURE);
+}
+
+int	ft_contains(char *s, char *sub)
 {
 	int	i;
 	int	j;
@@ -61,19 +73,19 @@ char	*find_path(char *cmd, char **envp)
 
 void	execute(char *av, char **env, char **cmd)
 {
-	int 	i;
+	int		i;
 	char	*path;
-	
+
 	i = -1;
 	cmd = ft_split(av, ' ');
 	path = find_path(cmd[0], env);
-	if (!path)	
+	if (!path)
 	{
 		while (cmd[++i])
 			free(cmd[i]);
 		free(cmd);
-		exit_with_error(3);
+		exit_with_error();
 	}
 	if (execve(path, cmd, env) == -1)
-		exit_with_error(4);
+		exit_with_error();
 }
