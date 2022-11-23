@@ -26,11 +26,12 @@ int		exit_with_error(void);
 int		print_error(char *message);
 char	*find_path(char *cmd, char **env);
 int		ft_contains(char *s, char *sub);
-void	child_process(char **av, char **env, int *fd, char **cmd);
-void	parent_process(char **av, char **env, int *fd, char **cmd);
 void	execute(char *av, char **env, char **cmd);
+int		open_file(char *argv, int i);
+int		get_next_line(char **line);
 
 typedef struct s_var {
+	int		args;
 	int		infile;
 	int		outfile;
 	pid_t	pid;

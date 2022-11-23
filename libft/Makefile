@@ -41,6 +41,7 @@ $(NAME): $(OBJ)
 	@$(AR) $(NAME) $(OBJ)
 	@echo "\033[1;32mlibft: Archived all .o files into libft.a successfully\033[0m"
 
+
 bonus: $(NAME) $(BOBJ)
 	@$(AR) $(NAME) $(BOBJ)
 	@echo "\033[1;32mlibft: Archived _bonus.o files into libft.a successfully\033[0m"

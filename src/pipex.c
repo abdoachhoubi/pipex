@@ -12,6 +12,9 @@
 
 #include "../inc/pipex.h"
 
+// Redirects the std input fd to the infile
+// and redirects the std output fd to the pipe output fd,
+// and executes the 1st cmd
 void	child_process(char **av, char **env, int *fd, char **cmd)
 {
 	int	filein;
@@ -25,6 +28,9 @@ void	child_process(char **av, char **env, int *fd, char **cmd)
 	execute(av[2], env, cmd);
 }
 
+// Redirects the std output fd to the outfile
+// and redirects the std output fd to the pipe input fd,
+// and executes the 1st cmd
 void	parent_process(char **av, char **env, int *fd, char **cmd)
 {
 	int	fileout;
@@ -53,8 +59,8 @@ int	main(int ac, char **av, char **env)
 			exit_with_error();
 		if (var.pid == 0)
 			child_process(av, env, var.fd, var.cmd);
-		else
-			parent_process(av, env, var.fd, var.cmd);
+		waitpid(var.pid, NULL, 0);
+		parent_process(av, env, var.fd, var.cmd);
 	}
 	sleep(100);
 }

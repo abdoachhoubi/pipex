@@ -11,6 +11,7 @@
 # **************************************************************************** #
 
 SRC = $(addprefix src/, pipex.c utils.c)
+BSRC =  $(addprefix src/, pipex_bonus.c utils.c utils_bonus.c)
 LIBFT = ./libft/libft.a
 NAME = pipex
 CC = cc
@@ -26,6 +27,11 @@ ${NAME}: ${LIBFT}
 
 ${LIBFT}:
 	@${MAKE} -C ./libft; ${MAKE} clean -C ./libft
+
+bonus: fclean
+	@${MAKE} -C ./libft; ${MAKE} clean -C ./libft
+	@${CC} ${CFLAGS} ${BSRC} ${LIBFT} -o ${NAME}
+	@echo "\033[1;33mpipex: pipex bonus program compiled successfully!\033[0m"
 
 clean:
 	@${RM} */*.o
