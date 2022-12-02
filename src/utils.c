@@ -15,13 +15,13 @@
 int	exit_with_error(void)
 {
 	perror("\033[31mError");
-	exit(EXIT_FAILURE);
+	exit(1);
 }
 
 int	print_error(char *message)
 {
 	ft_putendl_fd(message, 2);
-	exit(EXIT_FAILURE);
+	exit(1);
 }
 
 int	ft_contains(char *s, char *sub)

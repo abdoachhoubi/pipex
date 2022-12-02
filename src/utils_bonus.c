@@ -16,12 +16,10 @@
 void	usage(void)
 {
 	ft_putstr_fd("\033[31mError: Bad argument\n\e[0m", 2);
-	ft_putstr_fd("Ex: ./pipex <file1> <cmd1> <cmd2> <...> <file2>\n", 1);
-	ft_putstr_fd("    ./pipex \"here_doc\" <LIMITER> <cmd> <cmd1> <...> <file>\n", 1);
 	exit(EXIT_SUCCESS);
 }
 
-/* Function to open the files with the right flags */
+/* Function to open the files with the right flags and returns its fd */
 int	open_file(char *argv, int i)
 {
 	int	file;
@@ -51,15 +49,13 @@ int	get_next_line(char **line)
 	if (!buffer)
 		return (-1);
 	r = read(0, &c, 1);
-	while (r && c != '\n' && c != '\0')
+	while (r && r != -1 && c != '\n' && c != '\0')
 	{
-		if (c != '\n' && c != '\0')
-			buffer[i] = c;
-		i++;
+		buffer[i++] = c;
 		r = read(0, &c, 1);
 	}
-	buffer[i] = '\n';
-	buffer[++i] = '\0';
+	buffer[i++] = '\n';
+	buffer[i] = '\0';
 	*line = buffer;
 	free(buffer);
 	return (r);

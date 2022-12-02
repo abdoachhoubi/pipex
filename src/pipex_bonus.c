@@ -67,15 +67,13 @@ void	here_doc(char *limiter, int ac)
 
 int	main(int ac, char **av, char **env)
 {
-	t_var   var;
+	t_var	var;
 
 	if (ac < 5)
-	{
 		return (print_error("\033[1;31mError: Bad arguments!\033[0m"));
-	}
-    else
-    {
-        if (ft_contains(av[1], "here_doc"))
+	else
+	{
+		if (ft_contains(av[1], "here_doc"))
 		{
 			var.args = 3;
 			var.outfile = open_file(av[ac - 1], 0);
@@ -92,5 +90,5 @@ int	main(int ac, char **av, char **env)
 			child_process(av[(var.args)++], env, var.cmd);
 		dup2(var.outfile, STDOUT_FILENO);
 		execute(av[ac - 2], env, var.cmd);
-    }
+	}
 }

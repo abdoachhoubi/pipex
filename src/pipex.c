@@ -35,7 +35,7 @@ void	parent_process(char **av, char **env, int *fd, char **cmd)
 {
 	int	fileout;
 
-	fileout = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	fileout = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0640);
 	if (fileout == -1)
 		exit_with_error();
 	dup2(fd[0], STDIN_FILENO);
@@ -62,5 +62,5 @@ int	main(int ac, char **av, char **env)
 		waitpid(var.pid, NULL, 0);
 		parent_process(av, env, var.fd, var.cmd);
 	}
-	sleep(100);
+	return (0);
 }
