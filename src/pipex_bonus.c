@@ -25,13 +25,13 @@ void	child_process(char *av, char **env, char **cmd)
 	if (pid == 0)
 	{
 		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
+		dup2(fd[1], 1);
 		execute(av, env, cmd);
 	}
 	else
 	{
 		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
+		dup2(fd[0], 0);
 		waitpid(pid, NULL, 0);
 	}
 }
@@ -60,7 +60,7 @@ void	here_doc(char *limiter, int ac)
 	else
 	{
 		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
+		dup2(fd[0], 0);
 		wait(NULL);
 	}
 }
@@ -73,7 +73,7 @@ int	main(int ac, char **av, char **env)
 		return (print_error("\033[1;31mError: Bad arguments!\033[0m"));
 	else
 	{
-		if (ft_contains(av[1], "here_doc"))
+		if (!ft_strncmp(av[1], "here_doc", 8))
 		{
 			var.args = 3;
 			var.outfile = open_file(av[ac - 1], 0);
@@ -84,11 +84,11 @@ int	main(int ac, char **av, char **env)
 			var.args = 2;
 			var.outfile = open_file(av[ac - 1], 1);
 			var.infile = open_file(av[1], 2);
-			dup2(var.infile, STDIN_FILENO);
+			dup2(var.infile, 0);
 		}
 		while (var.args < ac - 2)
 			child_process(av[(var.args)++], env, var.cmd);
-		dup2(var.outfile, STDOUT_FILENO);
+		dup2(var.outfile, 1);
 		execute(av[ac - 2], env, var.cmd);
 	}
 }
