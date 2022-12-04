@@ -26,11 +26,11 @@ int	open_file(char *argv, int i)
 
 	file = 0;
 	if (i == 0)
-		file = open(argv, O_WRONLY | O_CREAT | O_APPEND, 0777);
+		file = open(argv, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else if (i == 1)
-		file = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+		file = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (i == 2)
-		file = open(argv, O_RDONLY, 0777);
+		file = open(argv, O_RDONLY, 0644);
 	if (file == -1)
 		exit_with_error();
 	return (file);

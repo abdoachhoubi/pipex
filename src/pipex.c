@@ -35,7 +35,7 @@ void	parent_process(char **av, char **env, int *fd, char **cmd)
 {
 	int	fileout;
 
-	fileout = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0640);
+	fileout = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fileout == -1)
 		exit_with_error();
 	dup2(fd[0], STDIN_FILENO);
